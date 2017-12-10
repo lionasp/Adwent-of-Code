@@ -23,6 +23,7 @@ def cycle(inp, count=1):
     return result
 
 
+# first part
 circ_list = list(range(0, 256))
 with open('10.in') as f:
     lengths = [int(a) for a in f.readline().strip().split(',')]
