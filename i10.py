@@ -39,8 +39,11 @@ def get_hash(text):
         dense.append(part_xor)
         counter += 16
 #    print('dense', dense)
-
-    return ''.join([str(hex(i))[2:] for i in dense])
+    res = []
+    for i in dense:
+        pre = '0' if i <= 15 else ''
+        res.append(pre + str(hex(i))[2:])
+    return ''.join(i for i in res)
 
 
 # first part

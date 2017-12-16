@@ -23,15 +23,41 @@ def to_bin(hash):
     return ''.join(table[i] for i in hash)
 
 
-inp = 'flqrgnkx'
+inp = 'ugkiagan'
 s = ['%s-%s' % (inp, i) for i in range(128)]
-print(s[0])
 h = get_hash(s[0])
-print(h)
-print(to_bin(h))
 counter = 0
+field = []
 for i in s:
     bn = to_bin(get_hash(i))
+    field.append(bn)
     for j in bn:
         counter += int(j)
 print(counter)
+size = 128
+
+marker = 0
+
+
+def mark(i, j):
+    field[i] = ''.join(field[i][:j]) + '*' + ''.join(field[i][j + 1:])
+    if (i + 1) < size and field[i + 1][j] == '1':
+        mark(i + 1, j)
+    if i and field[i - 1][j] == '1':
+        mark(i - 1, j)
+    if j and field[i][j - 1] == '1':
+        mark(i, j - 1)
+    if (j + 1) < size and field[i][j + 1] == '1':
+        mark(i, j + 1)
+
+
+for i in range(size):
+    for j in range(size):
+        try:
+            if field[i][j] == '1':
+                mark(i, j)
+                marker += 1
+        except IndexError:
+            print(i,j)
+
+print(marker)
